@@ -23,4 +23,8 @@ Demo/Presentation - Last project time session of a sprint (to be decided)
 - GIT Branches: Main -> Test -> Individual
 - Code freeze: just before retro
 
-## 
+## Scrum Master
+- 1st: Ric
+- 2nd: Zak
+- 3rd: Marcell
+- 4th: Mukarram
