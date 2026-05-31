@@ -1,17 +1,17 @@
 # Project Initiation
 ## Meetings & Standups
-Project Planning - First Session of a new sprint
-Daily Stand Up - beginning of each project time session
-Retro - Before the weekly demo
-Demo/Presentation - Last project time session of a sprint (to be decided)
+1. Project Planning - First Session of a new sprint
+2. Daily Stand Up - beginning of each project time session
+3. Retro - Before the weekly demo
+4. Demo/Presentation - Last project time session of a sprint (to be decided)
 
 ## Ways of working
 - set up lucid whiteboard for weekly planning
 - set up lucid whitebboard for tickets
 
 ## Things to think about for the whole project
-### Comments
-- Function descriptions for more complex functions
+
+- Add unction descriptions for more complex functions
 - 
 - documentation: README, comments
 - Weekly presentation: 
@@ -20,7 +20,9 @@ Demo/Presentation - Last project time session of a sprint (to be decided)
     - quick demo and where we at 
 - Overal solution: TDC
 - mvp: TDC 
-- GIT Branches: Main -> Test -> Individual
+- GIT Branches: 
+    - Main -> Test -> Individual
+    - Naming convention: `feature/<feature-name>-<your-name>`
 - Code freeze: just before retro
 
 ## Scrum Master
