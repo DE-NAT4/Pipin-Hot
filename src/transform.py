@@ -13,7 +13,6 @@ def get_transaction_data():
         )
 
 
-df = get_transaction_data()
 
 def generate_uuid():
     
@@ -67,10 +66,35 @@ def normalise_to_1nf(df: pd.DataFrame):
     return df_1nf
 
 
+def create_orders_table(df: pd.DataFrame):
+    # keep only relevant columns from the 1NF table and remove duplicates
+    df_orders = df[['order_id', 'payment_time', 'city', 'total_price', 'payment_method']].drop_duplicates()
+
+    return df_orders
 
 
+def create_products_table(df: pd.DataFrame):
+    # keep only relevant columns from the 1NF table and remove duplicates
+    df_products = df[['product_name', 'product_price']].drop_duplicates()
 
-# ------------------------------------
+    # add product ID
+    df_products = add_uuid(df_products, 'product_id')
+
+    return df_products
+
+
+def create_order_items_table(df_1nf: pd.DataFrame, df_products: pd.DataFrame):
+    # create table where order IDs are related to the product IDs and add a quantity column to avoid duplicates
+    df_order_items = df_1nf.groupby(['order_id', 'product_name', 'product_price'], sort=False).size().reset_index(name='quantity')
+
+    # merge with products table to get the product IDs
+    df_order_items = df_order_items.merge(df_products[['product_id', 'product_name', 'product_price']], on=['product_name', 'product_price'])
+
+    # keep relevant columns only
+    df_order_items = df_order_items[['order_id', 'product_id', 'quantity']]
+
+    return df_order_items
+
 
 def transform_data(df):
     
@@ -86,12 +110,22 @@ def transform_data(df):
     # normalise to 1NF
     df_1nf = normalise_to_1nf(df)
 
-    # normalise to 3NF
+    # normalise to 3NF: seperate the 1nf table into multiple tables with single dependencies
 
-    
-    return df_1nf
+    df_orders = create_orders_table(df_1nf)
+    df_products = create_products_table(df_1nf)
+    df_order_items = create_order_items_table(df_1nf, df_products)
 
-df = transform_data(df)
-print(df.head(10))
+    return df_orders, df_products, df_order_items
 
+
+# test, remove later
+
+df = get_transaction_data()
+
+df_orders, df_products, df_order_items = transform_data(df)
+
+print(df_orders.head(10))
+print(df_products.head(10))
+print(df_order_items.head(10))
 
