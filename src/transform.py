@@ -12,7 +12,7 @@ def get_transaction_data():
         names=["payment_time", "city", "customer_name", "basket", "total_price", "payment_method", "card_number"]
         )
 
-
+# Add timestamp formatting .to_datetime() (change sql script datar type)
 
 def generate_uuid():
     
