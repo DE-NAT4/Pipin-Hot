@@ -121,11 +121,11 @@ def transform_data(df):
 
 # test, remove later
 
-df = get_transaction_data()
+# df = get_transaction_data()
 
-df_orders, df_products, df_order_items = transform_data(df)
+# df_orders, df_products, df_order_items = transform_data(df)
 
-print(df_orders.head(10))
-print(df_products.head(10))
-print(df_order_items.head(10))
+# print(df_orders.head(10))
+# print(df_products.head(10))
+# print(df_order_items.head(10))
 
