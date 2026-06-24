@@ -19,6 +19,10 @@ def lambda_handler(event, context):
 
         df_orders, df_products, df_order_items = transform.transform_data(df_raw)
 
+        LOGGER.info(f'orders ({df_orders.shape[0]} rows, {df_orders.shape[1]} cols):\n{df_orders.head(3).to_string()}')
+        LOGGER.info(f'products ({df_products.shape[0]} rows, {df_products.shape[1]} cols):\n{df_products.head(3).to_string()}')
+        LOGGER.info(f'order_items ({df_order_items.shape[0]} rows, {df_order_items.shape[1]} cols):\n{df_order_items.head(3).to_string()}')
+
         load.load(df_orders, "orders_test")
         load.load(df_products, "products_test")
         load.load(df_order_items, "order_items_test")
