@@ -2,7 +2,11 @@
 from utils import db_utils
 from psycopg2.extras import execute_values
 
+import logging
 import pandas as pd # only import for autocomplete and hints
+
+LOGGER = logging.getLogger()
+LOGGER.setLevel(logging.INFO)
 
 def load(df: pd.DataFrame, table_name: str):
     
@@ -19,12 +23,11 @@ def load(df: pd.DataFrame, table_name: str):
 
                 conn.commit()
 
-                print(f"Loaded {len(df)} rows into '{table_name}'")
+                LOGGER.info(f"load: loaded {len(df)} rows into '{table_name}'")
 
     except Exception as e:
-        print("Load failed")
-        print(f"Error: {e}")
-        raise   # propagate error to main.py
+        LOGGER.error("load: load failed. Error: {e}")
+        raise e   # propagate error to main.py
         
 
 

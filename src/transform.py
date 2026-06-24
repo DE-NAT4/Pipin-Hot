@@ -1,5 +1,9 @@
 import pandas as pd
 import uuid
+import logging
+
+LOGGER = logging.getLogger()
+LOGGER.setLevel(logging.INFO)
 
 # def get_transaction_data():
 #     """
@@ -98,23 +102,38 @@ def create_order_items_table(df_1nf: pd.DataFrame, df_products: pd.DataFrame):
 
 def transform_data(df):
     
-    # remove duplicate rows
-    df = remove_duplicates(df)
+    try:
+        # remove duplicate rows
+        df = remove_duplicates(df)
 
-    # generate GUIDs for the orders
-    df = add_uuid(df, "order_id")
+        LOGGER.info(f'transform_data: removed duplicates')
 
-    # drop customer name and card number columns
-    df = drop_sensitive_data(df)
+        # generate GUIDs for the orders
+        df = add_uuid(df, "order_id")
 
-    # normalise to 1NF
-    df_1nf = normalise_to_1nf(df)
+        LOGGER.info(f'transform_data: added order id')
 
-    # normalise to 3NF: seperate the 1nf table into multiple tables with single dependencies
+        # drop customer name and card number columns
+        df = drop_sensitive_data(df)
 
-    df_orders = create_orders_table(df_1nf)
-    df_products = create_products_table(df_1nf)
-    df_order_items = create_order_items_table(df_1nf, df_products)
+        LOGGER.info(f'transform_data: removed sensitive data')
+
+        # normalise to 1NF
+        df_1nf = normalise_to_1nf(df)
+
+        LOGGER.info(f'transform_data: normalised to 1NF')
+
+        # normalise to 3NF: seperate the 1nf table into multiple tables with single dependencies
+
+        df_orders = create_orders_table(df_1nf)
+        df_products = create_products_table(df_1nf)
+        df_order_items = create_order_items_table(df_1nf, df_products)
+
+        LOGGER.info(f'transform_data: normalised to 3NF')
+
+    except Exception as e:
+        LOGGER.error(f'trasform_data failed: error={e}')
+        raise e
 
     return df_orders, df_products, df_order_items
 
