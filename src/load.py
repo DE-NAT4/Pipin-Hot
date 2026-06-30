@@ -23,7 +23,7 @@ def load(df: pd.DataFrame, table_name: str, conn, cur):
         LOGGER.info(f"load: loaded {len(df)} rows into '{table_name}'")
 
     except Exception as e:
-        LOGGER.error("load: load failed. Error: {e}")
+        LOGGER.error(f"load: load failed. Error: {e}")
         raise e   # propagate error to main.py
         
 

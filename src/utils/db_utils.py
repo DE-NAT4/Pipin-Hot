@@ -33,7 +33,7 @@ def get_connection_and_cursor(redshift_details):
 
         cursor = connection.cursor()
 
-        LOGGER(f'get_connection_and_cursor: connection ready')
+        LOGGER.info(f'get_connection_and_cursor: connection ready')
         return connection, cursor
 
     except ConnectionError as e:
