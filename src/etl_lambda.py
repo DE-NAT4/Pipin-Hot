@@ -36,9 +36,9 @@ def lambda_handler(event, context):
         sql_utils.create_db_tables(conn, cur)
 
 
-        load.load(df_orders, "orders_test", cur=cur, conn=conn)
-        load.load(df_products, "products_test", cur=cur, conn=conn)
-        load.load(df_order_items, "order_items_test", cur=cur, conn=conn)
+        load.load(df_orders, "orders", cur=cur, conn=conn)
+        load.load(df_products, "products", cur=cur, conn=conn)
+        load.load(df_order_items, "order_items", cur=cur, conn=conn)
 
         cur.close()
         conn.close()
